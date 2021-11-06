@@ -7,6 +7,7 @@ import (
 	rtctokenbuilder "github.com/AgoraIO/Tools/DynamicKey/AgoraDynamicKey/go/src/RtcTokenBuilder"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 )
@@ -27,8 +28,8 @@ var role rtctokenbuilder.Role
 // Use RtcTokenBuilder to generate an RTC token.
 func generateRtcToken(int_uid uint32, channelName string, role rtctokenbuilder.Role) {
 
-	appID := "<Your App ID>"
-	appCertificate := "<Your App Certificate>"
+	appID := os.Getenv("AGORA_APP_ID")            // "<Your App ID>"
+	appCertificate := os.Getenv("AGORA_APP_CERT") // "<Your App Certificate>"
 	// Number of seconds after which the token expires.
 	// For demonstration purposes the expiry time is set to 40 seconds. This shows you the automatic token renew actions of the client.
 	expireTimeInSeconds := uint32(40)
