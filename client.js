@@ -6,7 +6,7 @@ var rtc = {
 
 var options = {
     // Pass your app ID here.
-    appId: "<Your app ID>",
+    appId: "<Your app ID>", // XXX hmmmm strange but looks like it works without
     // Set the channel name.
     channel: "ChannelA",
     // Set the user role in the channel.
@@ -40,7 +40,8 @@ async function startBasicCall() {
 
     const client = AgoraRTC.createClient({ mode: "live", codec: "vp8" });
     client.setClientRole(options.role);
-    const uid = 123456;
+    // const uid = 123456;
+    const uid = 0; // If you set the uid to null or 0, the server assigns one and returns it in the onSuccess callback.
 
     // Fetch a token before calling join to join a channel.
     let token = await fetchToken(uid, options.channel, 1);
