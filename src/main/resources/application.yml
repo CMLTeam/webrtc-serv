@@ -1,0 +1,81 @@
+server:
+  address: 127.0.0.1
+  port: 8080
+
+spring:
+  datasource:
+    #url: jdbc:mysql://localhost:23306/webrtc_serv?useUnicode=true&rewriteBatchedStatements=true&useSSL=false
+    url: jdbc:postgresql://localhost:25432/webrtc_serv
+    username: webrtc_serv
+    password: webrtc_serv
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      # https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby
+      maximum-pool-size: 100
+      minimum-idle: 40
+  jpa:
+    #database: mysql
+    #database-platform: org.hibernate.dialect.MySQL8Dialect
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    hibernate:
+      ddl-auto: update
+  data:
+    mongodb:
+      database: webrtc_serv
+      port: 47017
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+
+  liquibase:
+    enabled: false # manual
+    change-log: classpath:changelog.xml
+
+  mail:
+    host: "smtp.sendgrid.net"
+    port: 465
+    protocol: "smtp"
+    username: "apikey"
+    password: "" # EXTERNAL
+    properties:
+      mail:
+        smtp:
+          socketFactory:
+            class: "javax.net.ssl.SSLSocketFactory"
+
+#logging:
+#  level:
+#    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: TRACE
+
+# https://www.baeldung.com/spring-data-disable-auto-config
+spring.autoconfigure.exclude:
+  # disable/comment below to enable JPA
+#  - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+#  - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+  # disable/comment below to enable Mongo
+  - org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration
+
+liquibase:
+  # TODO change the value below to true to enable liquibase
+  manual: false
+
+logRestRequestWebInterceptor:
+  enabled: true
+
+rabbitmq:
+  enabled: false
+
+s3:
+  enabled: false
+  bucket: "" # EXTERNAL
+  accessKey: "" # EXTERNAL
+  secretKey: "" # EXTERNAL
+  region: us-west-1
+  endpoint: https://s3.us-west-1.wasabisys.com
+
+elk:
+  host: elk.cmlteam.com
+  port: 10443
+  application: webrtc_serv
