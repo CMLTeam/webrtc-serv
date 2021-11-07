@@ -12,7 +12,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document("agora_app")
-public class AgoraApp {
+public class AgoraAppPersisted {
   @Id private String appId;
   private String appCert;
+
+  public AgoraAppPersisted(AgoraAppAddRequest appAddRequest) {
+    this(appAddRequest.getAppId(), appAddRequest.getAppCert());
+  }
 }
