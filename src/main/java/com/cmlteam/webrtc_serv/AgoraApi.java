@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +24,8 @@ public class AgoraApi {
 
   @ApiOperation(value = "register new Agora app")
   @PostMapping(value = "app")
-  public ResponseEntity<ApiResult> addApp(@Valid AgoraAppAddRequest agoraAppAddRequest) {
+  public ResponseEntity<ApiResult> addApp(
+      @Valid @RequestBody AgoraAppAddRequest agoraAppAddRequest) {
     if (agoraService.isExistingApp(agoraAppAddRequest.getAppId())) {
       return ResponseEntity.badRequest().body(ApiResult.error("appId already exists"));
     }
@@ -34,7 +36,8 @@ public class AgoraApi {
 
   @ApiOperation(value = "generate new Agora API token")
   @PostMapping(value = "token")
-  public ResponseEntity<AgoraTokenResult> generateToken(@Valid AgoraTokenRequest tokenRequest) {
+  public ResponseEntity<AgoraTokenResult> generateToken(
+      @Valid @RequestBody AgoraTokenRequest tokenRequest) {
     String appId = tokenRequest.getAppId();
     Optional<AgoraAppPersisted> appIdOpt = agoraService.findApp(appId);
     if (appIdOpt.isPresent()) {

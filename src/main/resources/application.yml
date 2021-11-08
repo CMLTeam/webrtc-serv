@@ -24,6 +24,8 @@ spring:
     mongodb:
       database: webrtc_serv
       port: 47017
+      username: webrtc_serv
+      password: webrtc_serv
   rabbitmq:
     host: 127.0.0.1
     port: 5672

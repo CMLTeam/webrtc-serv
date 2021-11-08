@@ -33,6 +33,7 @@ function fetchToken(uid, channelName, tokenRole) {
             })
             .catch(function (error) {
                 console.log(error);
+                alert(error);
             });
     })
 }
