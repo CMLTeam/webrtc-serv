@@ -6,7 +6,7 @@ var rtc = {
 
 var options = {
     // Pass your app ID here.
-    appId: "<Your app ID>", // XXX hmmmm strange but looks like it works without
+    appId: "b689a39412814597bc76c5970874b0f0", // XXX hmmmm strange but looks like it works without
     // Set the channel name.
     channel: "ChannelA",
     // Set the user role in the channel.
@@ -17,7 +17,8 @@ var options = {
 function fetchToken(uid, channelName, tokenRole) {
 
     return new Promise(function (resolve) {
-        axios.post('./fetch_rtc_token', {
+        axios.post('./agora/token', {
+            appId: options.appId,
             uid: uid,
             channelName: channelName,
             role: tokenRole
