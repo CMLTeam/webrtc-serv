@@ -15,8 +15,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class AgoraAppPersisted {
   @Id private String appId;
   private String appCert;
+  private int expirationTimeInSec;
 
   public AgoraAppPersisted(AgoraAppAddRequest appAddRequest) {
-    this(appAddRequest.getAppId(), appAddRequest.getAppCert());
+    this(
+        appAddRequest.getAppId(),
+        appAddRequest.getAppCert(),
+        appAddRequest.getExpirationTimeInSec());
   }
 }

@@ -1,5 +1,7 @@
 package com.cmlteam.webrtc_serv;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +13,11 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel
 public class AgoraAppAddRequest {
-    @NotBlank private String appId;
-    @NotBlank private String appCert;
+  @ApiModelProperty @NotBlank private String appId;
+  @ApiModelProperty @NotBlank private String appCert;
+
+  @ApiModelProperty(value = "Token expiration time in seconds", example = "600 (for 10 min)")
+  private int expirationTimeInSec;
 }
