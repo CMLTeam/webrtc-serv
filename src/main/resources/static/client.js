@@ -32,7 +32,7 @@ function fetchToken(uid, channelName, tokenRole) {
                 resolve(token);
             })
             .catch(function (error) {
-                console.log(error);
+                console.log(error); // TODO show actual error from server
                 alert(error);
             });
     })

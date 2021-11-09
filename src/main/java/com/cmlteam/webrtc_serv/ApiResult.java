@@ -1,7 +1,9 @@
 package com.cmlteam.webrtc_serv;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+@Getter
 @RequiredArgsConstructor
 public class ApiResult {
   private final boolean success;

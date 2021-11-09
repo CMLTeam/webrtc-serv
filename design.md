@@ -20,7 +20,7 @@ POST /agora/token
     "appId": "required",
     "uid": "",
     "channelName": "",
-    "role": ""
+    "role": 1
 }
 ==>
 {
