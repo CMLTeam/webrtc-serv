@@ -32,4 +32,23 @@ public class AgoraAllowanceApiTests extends ApiTestsBase {
     Assertions.assertEquals(
         Set.of(appId), agoraUserRepository.getFirstByEmail(email).orElseThrow().getAppIds());
   }
+
+  @Test
+  public void testAllowAccessFailsValidationEmail() throws Exception {
+    checkGivesBadRequest("notAnEmail", "aaa1");
+  }
+
+  @Test
+  public void testAllowAccessFailsValidationBlank() throws Exception {
+    checkGivesBadRequest("a@a.com", "");
+  }
+
+  private void checkGivesBadRequest(String email, String appId) throws Exception {
+    mockMvc
+        .perform(
+            post("/agora/allowance")
+                .content(json().add("email", email).add("appId", appId).toString())
+                .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+  }
 }
