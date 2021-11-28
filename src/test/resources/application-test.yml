@@ -1,0 +1,5 @@
+
+spring:
+  data:
+    mongodb:
+      database: webrtc_serv_tests
