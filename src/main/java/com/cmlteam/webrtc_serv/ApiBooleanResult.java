@@ -12,7 +12,7 @@ public class ApiBooleanResult {
   @ApiModelProperty private final boolean result;
 
   private static final ApiBooleanResult TRUE = new ApiBooleanResult(true);
-  private static final ApiBooleanResult FALSE = new ApiBooleanResult(true);
+  private static final ApiBooleanResult FALSE = new ApiBooleanResult(false);
 
   public static ApiBooleanResult of(boolean value) {
     return value ? TRUE : FALSE;
