@@ -4,10 +4,12 @@
 ```
 POST /agora/app
 {
-    "app_id": "",
-    "app_cert": "",
+    "appId": "",
+    "appCert": "",
+    "expirationTimeInSec": 600
 }
-==>
+```
+```
 {
     "success": true
 }
@@ -22,8 +24,30 @@ POST /agora/token
     "channelName": "",
     "role": 1
 }
-==>
+```
+```
 {
     "token": "result"
 }
+```
+
+### Allow user access to app
+```
+POST /user/allow
+{
+    "email": "",
+    "appId": ""
+}
+```
+### Revoke user access to app
+```
+DELETE /user/allow
+{
+    "email": "",
+    "appId": ""
+}
+```
+### List users (with allowed apps)
+```
+GET /user
 ```
