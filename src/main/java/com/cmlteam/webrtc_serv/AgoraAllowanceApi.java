@@ -18,7 +18,8 @@ public class AgoraAllowanceApi {
 
   @ApiOperation(value = "Allow user access to app")
   @PostMapping(value = "")
-  public ResponseEntity<ApiResult> allowAccess(@Valid AgoraAllowanceRequest agoraAllowanceRequest) {
+  public ResponseEntity<ApiResult> allowAccess(
+      @Valid @RequestBody AgoraAllowanceRequest agoraAllowanceRequest) {
     agoraAllowanceService.allowAccess(agoraAllowanceRequest);
     return ResponseEntity.ok(ApiResult.success());
   }
@@ -26,7 +27,7 @@ public class AgoraAllowanceApi {
   @ApiOperation(value = "Revoke user access to app")
   @DeleteMapping(value = "")
   public ResponseEntity<ApiResult> revokeAccess(
-      @Valid AgoraAllowanceRequest agoraAllowanceRequest) {
+      @Valid @RequestBody AgoraAllowanceRequest agoraAllowanceRequest) {
     if (agoraAllowanceService.revokeAccess(agoraAllowanceRequest)) {
       return ResponseEntity.ok(ApiResult.success());
     }
@@ -36,7 +37,7 @@ public class AgoraAllowanceApi {
   @ApiOperation(value = "Check user has access to app")
   @PostMapping(value = "/check")
   public ResponseEntity<ApiBooleanResult> checkAccess(
-      @Valid AgoraAllowanceRequest agoraAllowanceRequest) {
+      @Valid @RequestBody AgoraAllowanceRequest agoraAllowanceRequest) {
     return ResponseEntity.ok(
         ApiBooleanResult.of(agoraAllowanceService.checkAccess(agoraAllowanceRequest)));
   }
