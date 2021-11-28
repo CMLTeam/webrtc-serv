@@ -1,5 +1,6 @@
 package com.cmlteam.webrtc_serv.util;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -60,6 +61,14 @@ public final class JsonUtil {
       return OBJECT_MAPPER.readValue(json, clazz);
     } catch (IOException e) {
       throw new JsonParseException("Unable to parse json to class: " + trim(json, MAX_LENGTH), e);
+    }
+  }
+
+  public static <T> T parseJson(String json, TypeReference<T> typeReference) {
+    try {
+      return OBJECT_MAPPER.readValue(json, typeReference);
+    } catch (IOException e) {
+      throw new JsonParseException("Unable to parse json to type ref: " + trim(json, MAX_LENGTH), e);
     }
   }
 

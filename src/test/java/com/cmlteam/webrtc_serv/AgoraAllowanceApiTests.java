@@ -1,23 +1,31 @@
 package com.cmlteam.webrtc_serv;
 
+import com.cmlteam.webrtc_serv.util.JsonUtil;
+import com.fasterxml.jackson.core.type.TypeReference;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 
+import java.util.List;
 import java.util.Set;
 
 import static com.cmlteam.webrtc_serv.util.JsonUtil.json;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class AgoraAllowanceApiTests extends ApiTestsBase {
   private static final String EMAIL = "a@a.com";
+  private static final String EMAIL2 = "b@b.com";
   private static final String APP_ID = "aaa1";
+  private static final String APP_ID2 = "aaa2";
+  private static final String APP_ID3 = "aaa3";
   private static final String JSON_REQUEST =
       json().add("email", EMAIL).add("appId", APP_ID).toString();
 
@@ -78,9 +86,7 @@ public class AgoraAllowanceApiTests extends ApiTestsBase {
   @Test
   public void testRevokeAccessSuccess2() throws Exception {
     // GIVEN
-    String app2 = "bbb";
-    String app3 = "ccc";
-    agoraUserRepository.save(new AgoraUserPersisted(EMAIL, Set.of(APP_ID, app2, app3)));
+    agoraUserRepository.save(new AgoraUserPersisted(EMAIL, Set.of(APP_ID, APP_ID2, APP_ID3)));
 
     // WHEN
     mockMvc
@@ -92,7 +98,8 @@ public class AgoraAllowanceApiTests extends ApiTestsBase {
         .andExpect(status().isOk());
 
     assertEquals(
-        Set.of(app2, app3), agoraUserRepository.getFirstByEmail(EMAIL).orElseThrow().getAppIds());
+        Set.of(APP_ID2, APP_ID3),
+        agoraUserRepository.getFirstByEmail(EMAIL).orElseThrow().getAppIds());
   }
 
   @Test
@@ -150,5 +157,38 @@ public class AgoraAllowanceApiTests extends ApiTestsBase {
         // THEN
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.result", is(true)));
+  }
+
+  @Test
+  public void testListUsers() throws Exception {
+    // GIVEN
+    agoraAllowanceService.allowAccess(new AgoraAllowanceRequest(EMAIL, APP_ID));
+    agoraAllowanceService.allowAccess(new AgoraAllowanceRequest(EMAIL, APP_ID2));
+    agoraAllowanceService.allowAccess(new AgoraAllowanceRequest(EMAIL2, APP_ID3));
+
+    // WHEN
+    mockMvc
+        .perform(get("/agora/allowance/user"))
+        // THEN
+        .andExpect(status().isOk())
+        .andExpect(
+            result -> {
+              List<AgoraUserT> agoraUsers =
+                  JsonUtil.parseJson(
+                      result.getResponse().getContentAsString(), new TypeReference<>() {});
+              assertEquals(2, agoraUsers.size());
+              assertEquals(EMAIL, agoraUsers.get(0).getEmail());
+              assertEquals(Set.of(APP_ID, APP_ID2), agoraUsers.get(0).getAppIds());
+              assertEquals(EMAIL2, agoraUsers.get(1).getEmail());
+              assertEquals(Set.of(APP_ID3), agoraUsers.get(1).getAppIds());
+            });
+  }
+
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  public static class AgoraUserT {
+    private String email;
+    private Set<String> appIds;
   }
 }

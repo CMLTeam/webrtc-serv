@@ -42,6 +42,7 @@ public class AgoraAllowanceApi {
         ApiBooleanResult.of(agoraAllowanceService.checkAccess(agoraAllowanceRequest)));
   }
 
+  // TODO paging?
   @ApiOperation(value = "List users (with allowed apps)")
   @GetMapping(value = "/user")
   public ResponseEntity<List<AgoraUser>> listUsers() {

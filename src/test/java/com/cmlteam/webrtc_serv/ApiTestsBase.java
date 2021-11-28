@@ -14,5 +14,6 @@ import org.springframework.test.web.servlet.MockMvc;
 @ActiveProfiles("test")
 class ApiTestsBase {
   @Autowired AgoraUserRepository agoraUserRepository;
+  @Autowired AgoraAllowanceService agoraAllowanceService;
   @Autowired MockMvc mockMvc;
 }
