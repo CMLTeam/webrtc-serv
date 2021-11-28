@@ -1,13 +1,18 @@
 package com.cmlteam.webrtc_serv;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
+@ApiModel(
+    value =
+        "Represents the generic result of a REST call. In case of error the HTTP status should be 400+")
 public class ApiResult {
-  private final boolean success;
-  private final String error;
+  @ApiModelProperty private final boolean success;
+  @ApiModelProperty private final String error;
 
   private static final ApiResult SUCCESS = new ApiResult(true, null);
 

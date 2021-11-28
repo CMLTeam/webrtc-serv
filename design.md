@@ -33,7 +33,7 @@ POST /agora/token
 
 ### Allow user access to app
 ```
-POST /allowance
+POST /agora/allowance
 {
     "email": "",
     "appId": ""
@@ -41,7 +41,7 @@ POST /allowance
 ```
 ### Revoke user access to app
 ```
-DELETE /allowance
+DELETE /agora/allowance
 {
     "email": "",
     "appId": ""
@@ -49,7 +49,7 @@ DELETE /allowance
 ```
 ### Check user has access to app
 ```
-POST /allowance/check
+POST /agora/allowance/check
 {
     "email": "",
     "appId": ""
@@ -69,7 +69,7 @@ or
 ```
 ### List users (with allowed apps)
 ```
-GET /allowance/user
+GET /agora/allowance/user
 ```
 ```JSON
 [
