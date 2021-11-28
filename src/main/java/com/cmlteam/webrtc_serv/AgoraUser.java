@@ -10,6 +10,10 @@ import java.util.Set;
 @RequiredArgsConstructor
 @ApiModel
 public class AgoraUser {
-    private final String email;
-    private final Set<String> appIds;
+  private final String email;
+  private final Set<String> appIds;
+
+  public AgoraUser(AgoraUserPersisted agoraUserPersisted) {
+    this(agoraUserPersisted.getEmail(), agoraUserPersisted.getAppIds());
+  }
 }

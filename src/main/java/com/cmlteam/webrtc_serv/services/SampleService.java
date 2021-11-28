@@ -22,13 +22,14 @@ public class SampleService {
   public String getDbVersion() {
     return jdbcTemplate.queryForObject("select version();", String.class);
   }
+
   public String getMongoVersion() {
-    return mongoTemplate.executeCommand(new Document("buildInfo",1)).get("version", String.class);
+    return mongoTemplate.executeCommand(new Document("buildInfo", 1)).get("version", String.class);
   }
 
   @PostConstruct
   public void test() {
-//    System.out.println(getDbVersion());
-//    System.out.println("MONGO: " + getMongoVersion());
+    //    System.out.println(getDbVersion());
+    //    System.out.println("MONGO: " + getMongoVersion());
   }
 }

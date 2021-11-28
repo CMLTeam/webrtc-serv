@@ -37,24 +37,24 @@ public class EmailService {
     javaMailSender.send(mimeMessage);
   }
 
-/*  @PostConstruct
-  public void test() {
-    log.info("Send test email...");
-    String d = "cmlteam.com";
-//    sendEmail(
-//        "no-reply@" + d,
-//        "volodymyr@" + d,
-//        "subj",
-//        "body 111 <h1>Header</h1> <b>Bold</b>",
-//        true,
-//        new File("/home/xonix/Desktop/test2.jpg"));
-    sendEmail(
-        "no-reply@" + d,
-        "volodymyr@" + d,
-        "subj",
-        "body 111 <h1>Header</h1> <b>Bold</b>",
-        false,
-        null);
-    log.info("Sent.");
-  }*/
+  /*  @PostConstruct
+    public void test() {
+      log.info("Send test email...");
+      String d = "cmlteam.com";
+  //    sendEmail(
+  //        "no-reply@" + d,
+  //        "volodymyr@" + d,
+  //        "subj",
+  //        "body 111 <h1>Header</h1> <b>Bold</b>",
+  //        true,
+  //        new File("/home/xonix/Desktop/test2.jpg"));
+      sendEmail(
+          "no-reply@" + d,
+          "volodymyr@" + d,
+          "subj",
+          "body 111 <h1>Header</h1> <b>Bold</b>",
+          false,
+          null);
+      log.info("Sent.");
+    }*/
 }

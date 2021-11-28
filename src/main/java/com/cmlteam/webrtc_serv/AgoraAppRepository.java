@@ -7,5 +7,5 @@ import java.util.Optional;
 
 @Repository
 public interface AgoraAppRepository extends MongoRepository<AgoraAppPersisted, String> {
-    Optional<AgoraAppPersisted> getFirstByAppId(String appId);
+  Optional<AgoraAppPersisted> getFirstByAppId(String appId);
 }

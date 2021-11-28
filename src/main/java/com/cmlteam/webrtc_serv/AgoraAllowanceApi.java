@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -17,25 +18,32 @@ public class AgoraAllowanceApi {
 
   @ApiOperation(value = "Allow user access to app")
   @PostMapping(value = "")
-  public ResponseEntity<ApiResult> allowAccess(AgoraAllowanceRequest agoraAllowanceRequest) {
-    throw new UnsupportedOperationException("TDB");
+  public ResponseEntity<ApiResult> allowAccess(@Valid AgoraAllowanceRequest agoraAllowanceRequest) {
+    agoraAllowanceService.allowAccess(agoraAllowanceRequest);
+    return ResponseEntity.ok(ApiResult.success());
   }
 
   @ApiOperation(value = "Revoke user access to app")
   @DeleteMapping(value = "")
-  public ResponseEntity<ApiResult> revokeAccess(AgoraAllowanceRequest agoraAllowanceRequest) {
-    throw new UnsupportedOperationException("TDB");
+  public ResponseEntity<ApiResult> revokeAccess(
+      @Valid AgoraAllowanceRequest agoraAllowanceRequest) {
+    if (agoraAllowanceService.revokeAccess(agoraAllowanceRequest)) {
+      return ResponseEntity.ok(ApiResult.success());
+    }
+    return ResponseEntity.notFound().build();
   }
 
   @ApiOperation(value = "Check user has access to app")
   @PostMapping(value = "/check")
-  public ResponseEntity<ApiBooleanResult> checkAccess(AgoraAllowanceRequest agoraAllowanceRequest) {
-    throw new UnsupportedOperationException("TDB");
+  public ResponseEntity<ApiBooleanResult> checkAccess(
+      @Valid AgoraAllowanceRequest agoraAllowanceRequest) {
+    return ResponseEntity.ok(
+        ApiBooleanResult.of(agoraAllowanceService.checkAccess(agoraAllowanceRequest)));
   }
 
   @ApiOperation(value = "List users (with allowed apps)")
   @GetMapping(value = "/user")
   public ResponseEntity<List<AgoraUser>> listUsers() {
-    throw new UnsupportedOperationException("TDB");
+    return ResponseEntity.ok(agoraAllowanceService.listUsers());
   }
 }
