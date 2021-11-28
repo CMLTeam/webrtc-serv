@@ -9,7 +9,7 @@ POST /agora/app
     "expirationTimeInSec": 600
 }
 ```
-```
+```JSON
 {
     "success": true
 }
@@ -25,7 +25,7 @@ POST /agora/token
     "role": 1
 }
 ```
-```
+```JSON
 {
     "token": "result"
 }
@@ -33,7 +33,7 @@ POST /agora/token
 
 ### Allow user access to app
 ```
-POST /user/allow
+POST /allowance
 {
     "email": "",
     "appId": ""
@@ -41,13 +41,45 @@ POST /user/allow
 ```
 ### Revoke user access to app
 ```
-DELETE /user/allow
+DELETE /allowance
 {
     "email": "",
     "appId": ""
 }
 ```
+### Check user has access to app
+```
+POST /allowance/check
+{
+    "email": "",
+    "appId": ""
+}
+```
+result:
+```JSON
+{
+  "result": true
+}
+```
+or
+```JSON
+{
+  "result": false
+}
+```
 ### List users (with allowed apps)
 ```
-GET /user
+GET /allowance/user
+```
+```JSON
+[
+  {
+    "email": "a@a.com",
+    "appIds": ["aaa1", "aaa2"]
+  },
+  {
+    "email": "b@b.com",
+    "appIds": ["bbb1"]
+  }
+]
 ```
